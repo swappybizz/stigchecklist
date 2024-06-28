@@ -11,6 +11,8 @@ client = MongoClient(MONGO_URI)
 db = client['Stig_checklist']
 collection = db['checklist']
 
+client_submissions = db['client_submissions']
+
 st.title("Your Checklist Upload App")
 
 # Functions to read different file types
@@ -96,3 +98,8 @@ if checklists:
 
 else:
     st.text("No checklists uploaded.")
+    
+    
+for client_submission in client_submissions.find():
+    with st.expander(f"Client Submission: {client_submission['client_id']} {client_submission['current_date']}",expanded=False):
+        st.code(client_submission['submission'])
